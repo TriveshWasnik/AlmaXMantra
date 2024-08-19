@@ -18,6 +18,8 @@ ABMyntra is a clone of the popular e-commerce platform Myntra. The application i
 - React Icons: Icon library for easily adding icons to the UI.
 - Tailwind CSS: Utility-first CSS framework for styling components.
 - Redux Toolkit: State management solution for efficient data handling.
+- Axios : fetch Product API
+-
 - Firebase: Used for user authentication and storing user data.
 
 Installation

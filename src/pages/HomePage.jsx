@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import pic4080OffBanner from "../assets/images/banners/4080OffBanner.png";
-import { homeSlider } from "../data/HomeCarousel.js";
 import { useDispatch } from "react-redux";
 import { setSlidesPerRow } from "../store/productSlice.js";
 import Banner from "../components/Banner.jsx";
@@ -38,7 +37,7 @@ function HomePage() {
       <Banner pic={openBannerPic} url="/" className="mt-5" />
       <Banner pic={flat70BannerPic} url="/" />
       <Banner pic={crezyDealsPic} url="/" />
-      <Carousel data={homeSlider} className="pt-2 md:pt-5 pb-2 md:pb-10" />
+
       <Heading
         text="CATEGORIES TO CART"
         className="text-[20px] md:text-[48px] text-center py-3 md:py-20"
