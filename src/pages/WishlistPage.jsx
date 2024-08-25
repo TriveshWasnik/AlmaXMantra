@@ -3,14 +3,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { toast } from "react-hot-toast";
-import { collection, doc, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase/setup";
 import Container from "../ui/Container";
+import { useSelector } from "react-redux";
 
 // Wishlist Page
 
 const WishlistPage = () => {
   const [productList, setProductList] = useState([]);
+
   async function getProducts() {
     try {
       // check the current user
@@ -73,6 +75,14 @@ const WishlistPage = () => {
                     <div className="text-xs text-orange-400 ml-1">
                       ($ 22 OFF)
                     </div>
+                  </div>
+                  <div className="mt-2">
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
+                      Add to Cart
+                    </button>
+                    <button className="bg-red-500 text-white px-4 py-2 rounded">
+                      Remove
+                    </button>
                   </div>
                 </div>
               </Link>

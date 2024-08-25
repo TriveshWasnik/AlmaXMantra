@@ -12,6 +12,7 @@ import crezyDealsPic from "../assets/images/banners/creazyDealsBanner.png";
 import Carousel from "../components/Carousel";
 import appBannerPic from "../assets/images/banners/homeAppBanner.png";
 import CartCategory from "../ui/CartCategory.jsx";
+import { logoutUser } from "../store/authSlice.js";
 
 // Home Page
 function HomePage() {

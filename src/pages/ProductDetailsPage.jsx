@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Container from "../ui/Container";
 import Button from "../ui/Button";
 import { doc, setDoc } from "firebase/firestore";
@@ -9,18 +9,24 @@ import { toast } from "react-hot-toast";
 function ProductDetailsPage() {
   // get the perticular page location
   const location = useLocation();
+  const navigate = useNavigate();
   function addProducts() {
     try {
       // get the current user
       const user = auth.currentUser;
-      // fetch the user uid
-      const userDoc = doc(db, "users", user?.uid);
-      // fetch the product title
-      const productDoc = doc(userDoc, "product", location.state.title);
-      // set the product data on user collection
-      setDoc(productDoc, { data: location.state });
-      // display the message
-      toast.success("Product Added to the Wishlist");
+
+      if (user === null) {
+        navigate("/login");
+      } else {
+        // fetch the user uid
+        const userDoc = doc(db, "users", user?.uid);
+        // fetch the product title
+        const productDoc = doc(userDoc, "product", location.state.title);
+        // set the product data on user collection
+        setDoc(productDoc, { data: location.state });
+        // display the message
+        toast.success("Product Added to the Wishlist");
+      }
     } catch (error) {
       console.log(error);
     }

@@ -11,22 +11,29 @@ import MenuItem from "../ui/MenuItem.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../store/authSlice.js";
 import { toast } from "react-hot-toast";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/setup.jsx";
 
 // Header Component
 
 const Header = () => {
   // check user login or not using react-redux
-  const { user, status } = useSelector((store) => store.auth);
+  const user = useSelector((store) => store.auth.user);
   const dispatch = useDispatch();
   // Navigate the React Route
   const navigate = useNavigate();
   // defined and set the value of search
   const [search, setSearch] = useState("");
   // logout the current user
-  function logoutHandler() {
-    dispatch(logoutUser(null));
-    toast.success("User LoggedOut Successfully");
-    navigate("/");
+  async function logoutHandler() {
+    try {
+      await signOut(auth);
+      dispatch(logoutUser());
+      toast.success("User LoggedOut Successfully");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -86,18 +93,18 @@ const Header = () => {
               to={`/search/${search}`}
             />
             <ul className={`flex items-center`}>
-              {user !== null && status === true ? (
+              {user !== null ? (
                 <>
                   <MenuItem
                     to="/wishlist"
                     icon={<FaRegHeart size={"18px"} />}
                     name="Wishlist"
                   />
-                  <MenuItem
-                    to="/checkout/cart"
-                    icon={<HiOutlineShoppingBag size={"18px"} />}
-                    name="Bag"
-                  />
+                  {/* <MenuItem
+                      to="/checkout/cart"
+                      icon={<HiOutlineShoppingBag size={"18px"} />}
+                      name="Bag"
+                    /> */}
                   <li onClick={logoutHandler}>
                     <NavLink
                       className={`border-b-4  border-transparent flex flex-col items-center text-[#3E3F45] md:px-3 py-4 text-[11px]  tracking-widest `}

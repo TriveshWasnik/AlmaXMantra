@@ -22,7 +22,11 @@ const ProductsPage = () => {
   // get the product data from redux store
   const { products } = useSelector((store) => store.product);
   (async function () {
-    await useGetProducts();
+    try {
+      await useGetProducts();
+    } catch (error) {
+      console.log(error.message);
+    }
   })();
 
   return (
@@ -50,25 +54,28 @@ const ProductsPage = () => {
             .filter((data) =>
               data?.category.name.includes(location?.state?.category)
             )
-            .map((data) => (
-              <div className="w-64 p-2 h-96 text-left text-[#521c03] tracking-wider">
+            .map((data, idx) => (
+              <div
+                key={idx}
+                className="w-64 p-2 h-96 text-left text-[#521c03] tracking-wider"
+              >
+                <Carousel
+                  className="w-64 p-2"
+                  showThumbs={false}
+                  showArrows={false}
+                  autoPlay={true}
+                >
+                  <div>
+                    <img src={data.images[0]} />
+                  </div>
+                  <div>
+                    <img src={data.images[1]} />
+                  </div>
+                  <div>
+                    <img src={data.images[2]} />
+                  </div>
+                </Carousel>
                 <Link to={"/details"} state={data}>
-                  <Carousel
-                    className="w-64 p-2"
-                    showThumbs={false}
-                    showArrows={false}
-                    autoPlay={true}
-                  >
-                    <div>
-                      <img src={data.images[0]} />
-                    </div>
-                    <div>
-                      <img src={data.images[1]} />
-                    </div>
-                    <div>
-                      <img src={data.images[2]} />
-                    </div>
-                  </Carousel>
                   <div className="my-2 pl-3">
                     <div className=" font-bold mt-6">{data.title}</div>
                     <div className="text-sm text-gray-500">
